@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TypeRush – A professional typing speed test. Measure your WPM, accuracy, and improve your typing skills." />
+  <title>TypeRush – Typing Speed Test</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===========================
+       HEADER
+  ============================ -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <div class="header__logo" aria-label="TypeRush logo">
+        <span class="header__logo-icon" aria-hidden="true">⚡</span>
+        <span class="header__logo-text">TypeRush</span>
+      </div>
+      <p class="header__tagline">Test your typing speed &amp; accuracy</p>
+    </div>
+  </header>
+
+  <!-- ===========================
+       MAIN
+  ============================ -->
+  <main class="main" role="main">
+
+    <!-- ── DIFFICULTY SELECTOR ── -->
+    <section class="difficulty-section" aria-label="Difficulty selection">
+      <div class="difficulty-group" role="group" aria-label="Choose difficulty level">
+        <button
+          class="difficulty-btn difficulty-btn--active"
+          data-level="easy"
+          aria-pressed="true"
+          aria-label="Easy difficulty">
+          Easy
+        </button>
+        <button
+          class="difficulty-btn"
+          data-level="medium"
+          aria-pressed="false"
+          aria-label="Medium difficulty">
+          Medium
+        </button>
+        <button
+          class="difficulty-btn"
+          data-level="hard"
+          aria-pressed="false"
+          aria-label="Hard difficulty">
+          Hard
+        </button>
+      </div>
+    </section>
+
+    <!-- ── STATS BAR ── -->
+    <section class="stats-bar" aria-label="Live statistics">
+
+      <div class="stat-card" aria-live="polite" aria-label="Timer">
+        <span class="stat-card__label">Time</span>
+        <span class="stat-card__value" id="timer" aria-atomic="true">0:00.0</span>
+      </div>
+
+      <div class="stat-card" aria-live="polite" aria-label="Words per minute">
+        <span class="stat-card__label">WPM</span>
+        <span class="stat-card__value" id="wpm" aria-atomic="true">0</span>
+      </div>
+
+      <div class="stat-card" aria-live="polite" aria-label="Accuracy percentage">
+        <span class="stat-card__label">Accuracy</span>
+        <span class="stat-card__value" id="accuracy" aria-atomic="true">100%</span>
+      </div>
+
+      <div class="stat-card stat-card--best" aria-label="Best WPM score">
+        <span class="stat-card__label">Best</span>
+        <span class="stat-card__value" id="best-score" aria-atomic="true">0</span>
+      </div>
+
+    </section>
+
+    <!-- ── TEXT DISPLAY ── -->
+    <section class="typing-area" aria-label="Typing test area">
+
+      <div
+        class="text-display"
+        id="text-display"
+        aria-label="Text to type"
+        aria-live="off"
+        role="region">
+        <!-- Characters will be injected as <span> elements by JavaScript -->
+      </div>
+
+      <div class="textarea-wrapper">
+        <textarea
+          id="typing-input"
+          class="typing-input"
+          placeholder="Start typing here to begin the test…"
+          aria-label="Type the text shown above"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          rows="3"
+        ></textarea>
+        <div class="textarea-glow" aria-hidden="true"></div>
+      </div>
+
+    </section>
+
+    <!-- ── CONTROLS ── -->
+    <div class="controls" role="toolbar" aria-label="Test controls">
+      <button
+        class="btn btn--primary"
+        id="new-test-btn"
+        aria-label="Start a new typing test">
+        <span class="btn__icon" aria-hidden="true">↻</span>
+        New Test
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===========================
+       RESULT MODAL
+  ============================ -->
+  <div
+    class="modal-backdrop"
+    id="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    aria-describedby="modal-desc"
+    aria-hidden="true">
+
+    <div class="modal" id="modal">
+      <div class="modal__header">
+        <div class="modal__emoji" id="modal-emoji" aria-hidden="true">🏆</div>
+        <h2 class="modal__title" id="modal-title">Excellent!</h2>
+        <p class="modal__subtitle" id="modal-desc">Here are your results</p>
+      </div>
+
+      <div class="modal__stats">
+        <div class="modal__stat">
+          <span class="modal__stat-label">Time</span>
+          <span class="modal__stat-value" id="modal-time">–</span>
+        </div>
+        <div class="modal__stat">
+          <span class="modal__stat-label">WPM</span>
+          <span class="modal__stat-value modal__stat-value--highlight" id="modal-wpm">–</span>
+        </div>
+        <div class="modal__stat">
+          <span class="modal__stat-label">Accuracy</span>
+          <span class="modal__stat-value" id="modal-accuracy">–</span>
+        </div>
+        <div class="modal__stat">
+          <span class="modal__stat-label">Best WPM</span>
+          <span class="modal__stat-value" id="modal-best">–</span>
+        </div>
+      </div>
+
+      <div class="modal__actions">
+        <button
+          class="btn btn--primary btn--large"
+          id="modal-new-test-btn"
+          aria-label="Try a new typing test">
+          <span class="btn__icon" aria-hidden="true">↻</span>
+          Try Again
+        </button>
+        <button
+          class="btn btn--ghost"
+          id="modal-close-btn"
+          aria-label="Close results modal">
+          Close
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===========================
+       FOOTER
+  ============================ -->
+  <footer class="footer" role="contentinfo">
+    <p>TypeRush &copy; 2025 — Built with ❤️ and pure JavaScript</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
